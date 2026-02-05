@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documenting Mundane Possessions as Emblematic Objectifications of Self</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            line-height: 1.6;
+            color: #000;
+            background: #fff;
+            padding: clamp(1rem, 3vw, 2rem);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        main {
+            margin-top: clamp(2rem, 5vw, 3rem);
+        }
+
+        h1 {
+            font-size: clamp(1.5rem, 4vw, 2.1rem);
+            font-weight: 400;
+            margin-bottom: clamp(0.75rem, 2vw, 1rem);
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            font-weight: 400;
+            margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
+            font-style: italic;
+        }
+
+        .author {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            font-weight: 400;
+            margin-bottom: clamp(0.75rem, 2vw, 1rem);
+        }
+
+        .separator {
+            margin: clamp(0.75rem, 2vw, 1rem) 0 clamp(1.5rem, 4vw, 2rem) 0;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+        }
+
+        nav {
+            margin-bottom: clamp(1.5rem, 4vw, 2rem);
+        }
+
+        nav a {
+            display: block;
+            color: #000;
+            text-decoration: none;
+            font-style: normal;
+            margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
+            transition: opacity 0.2s;
+        }
+
+        nav a:hover {
+            opacity: 0.6;
+        }
+
+        nav a::before {
+            content: attr(data-number) ". ";
+            font-style: normal;
+        }
+
+        .bottom-nav {
+            margin-top: clamp(2rem, 5vw, 3rem);
+            display: flex;
+            gap: clamp(0.75rem, 2vw, 1rem);
+        }
+
+        .bottom-nav a {
+            color: #000;
+            text-decoration: none;
+            font-style: italic;
+        }
+
+        .bottom-nav a:hover {
+            opacity: 0.6;
+        }
+
+        footer {
+            margin-top: clamp(1.5rem, 4vw, 2rem);
+        }
+
+        footer a {
+            color: #000;
+            text-decoration: none;
+            font-style: italic;
+        }
+
+        footer a:hover {
+            opacity: 0.6;
+        }
+
+        .model-container {
+            width: 100%;
+            height: 400px;
+            margin: 2rem 0;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .model-container canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <main>
+        <h1>Documenting Mundane Possessions as Emblematic Objectifications of Self</h1>
+        <div class="subtitle">A Poetic Thesis Exploration Through Simple Modes of 3D Printing and Projection Mapping</div>
+        <div class="author">Jovana Gavrilovic</div>
+        <div class="separator">-</div>
+        
+        <nav>
+            <a href="concept.html" data-number="I">Concept</a>
+            <a href="research.html" data-number="II">Research</a>
+            <a href="precedents.html" data-number="III">Precedents</a>
+            <a href="sketches.html" data-number="IV">Sketches & Notes</a>
+            <a href="#" data-number="V">Explorations & Prototypes</a>
+            <a href="#" data-number="VI">Written Reflections</a>
+        </nav>
+
+        <div class="bottom-nav">
+            <a href="#">v</a>
+        </div>
+    </main>
+
+    <footer>
+        <a href="#">Info</a>
+    </footer>
+
+    <!-- Example 3D Model Container -->
+    <div class="model-container" id="model-container"></div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+
+        // Scene setup
+        const container = document.getElementById('model-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setClearColor(0xffffff, 0); // Transparent background
+        container.appendChild(renderer.domElement);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
+
+        // Camera position
+        camera.position.z = 5;
+
+        // Load OBJ file
+        const loader = new OBJLoader();
+        
+        // Replace 'path/to/your/model.obj' with your actual OBJ file path
+        // loader.load('path/to/your/model.obj', (object) => {
+        //     scene.add(object);
+        //     
+        //     // Center the model
+        //     const box = new THREE.Box3().setFromObject(object);
+        //     const center = box.getCenter(new THREE.Vector3());
+        //     object.position.sub(center);
+        //     
+        //     // Animation loop
+        //     function animate() {
+        //         requestAnimationFrame(animate);
+        //         object.rotation.y += 0.01; // Rotate the model
+        //         renderer.render(scene, camera);
+        //     }
+        //     animate();
+        // });
+
+        // Placeholder: rotating cube until you add your OBJ file
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshStandardMaterial({ color: 0x666666 });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
+
